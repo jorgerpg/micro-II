@@ -12,6 +12,7 @@ RM := rm -rf
 -include Drivers/STM32F0xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/Drv_PIT/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
