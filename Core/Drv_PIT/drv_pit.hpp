@@ -1,14 +1,3 @@
-/**
- * @file drv_pit.hpp
- * @author Josias da Silva Alves Souza (josias.souza@fieb.org.br)
- * @brief
- * @version 0.1
- * @date 2023-10-24
- *
- * @copyright Copyright (c) 2023
- *
- */
-
 #ifndef _DRV_PIT_HPP_
 #define _DRV_PIT_HPP_
 

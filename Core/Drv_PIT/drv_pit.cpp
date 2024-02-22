@@ -1,23 +1,4 @@
 /**
- * @file drv_pit.cpp
- * @author Josias da Silva Alves Souza (josias.souza@fieb.org.br)
- * @brief Periodic Interrupt Timer module driver.
- * @version 0.1
- * @date 2023-10-24
- *
- * @copyright Copyright (c) 2023
- *
- * Based in drv_pit.c
- * author: PliÂ­nio Barbosa da Silva
- * Version 2019.7.3
- * Creation Date 02/04/2019
- *
- *          This file provides functions to manage software timers
- *          functionalities:
- *           + Initialization of a software timer and monitoring timer
- *           + Peripheral Control functions
- *
- *  @verbatim
   ==============================================================================
                         ##### How to use this driver #####
   ==============================================================================
@@ -29,8 +10,9 @@
 
   // Create a timer event of 100ms
   (void)myTimer1.set(100, MiliSec);
-  // Create a timer event of 500ms
+  // Create a timer event of 500ms with auto reload
   (void)myTimer2.set(500, MiliSec);
+  (void)myTimer2.setAutoReload(true);
 
 
   while (1)
@@ -41,33 +23,29 @@
     }
 
     if(myTimer2.get() == true){
-      (void)myTimer2.set(500, MiliSec); // Restart the timer for the led2
+      // No need to restart the timer for the led2 since it will autoreload
       //Toggle GPIO pin where LED2 is connected here
     }
   }
 
-  ...
-
-  @endverbatim
  */
 
 #include "drv_pit.hpp"
 
 /**
  * Maximum value in ms. When the tick is 0XFFFFFFFF - 1.
- * PIT_MAX_COUNT_MS = sl_sleeptimer_tick_to_ms(0xfffffffe)
  */
 #define PIT_MAX_COUNT_MS 0x7CFFFFF
 
 /**
  * Return the actual tick counter.
  */
-#define GetPITCount() (uint32_t) HAL_GetTick() /* PIT Peripheral counts backwards */
+#define getPITCount() (uint32_t) HAL_GetTick() /* PIT Peripheral counts backwards */
 
 /**
  * Determine the difference between the maximum count and actual counter value.
  */
-#define GetCountToOverflow() (uint32_t)(0xffffffff - GetPITCount()) /* PIT Peripheral counts backwards */
+#define GetCountToOverflow() (uint32_t)(0xffffffff - getPITCount()) /* PIT Peripheral counts backwards */
 
 /**
  * @brief Initializes the PIT driver.
@@ -126,7 +104,7 @@ bool DrvPIT::set(uint32_t CountsToPerform, ValidUnitsOfPIT Unit)
       configurePeripheral(); /* Call configuration routine.          */
     }
     countsToOverflow = GetCountToOverflow();
-    currentPitCount = GetPITCount();
+    currentPitCount = getPITCount();
 
     if (countsToOverflow >= CountsToPerform)
     { /* Count will finish before the overflow event */
@@ -171,7 +149,7 @@ bool DrvPIT::get() {
 	} else if (m_timer.status == true) { /* Timer has already expired. */
 		returnValue = true;
 	} else { /* Check current PIT value and calculate if it has expired.               */
-		currentPitCount = GetPITCount();
+		currentPitCount = getPITCount();
 
     if (m_timer.waitOverflow != false)
     {
@@ -233,7 +211,7 @@ void DrvPIT::resume(void)
  */
 uint32_t DrvPIT::getCounter(void)
 {
-  uint32_t currentPitCount = GetPITCount();
+  uint32_t currentPitCount = getPITCount();
 
   return (m_timer.countLimit - currentPitCount);
 }
