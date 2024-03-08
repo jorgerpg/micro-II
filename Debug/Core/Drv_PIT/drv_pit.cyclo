@@ -1,9 +1,0 @@
-../Core/Drv_PIT/drv_pit.cpp:54:1:DrvPIT::DrvPIT()	1
-../Core/Drv_PIT/drv_pit.cpp:63:1:DrvPIT::~DrvPIT()	1
-../Core/Drv_PIT/drv_pit.cpp:63:1:virtual DrvPIT::~DrvPIT()	1
-../Core/Drv_PIT/drv_pit.cpp:77:6:bool DrvPIT::set(uint32_t, ValidUnitsOfPIT)	7
-../Core/Drv_PIT/drv_pit.cpp:142:6:bool DrvPIT::get()	9
-../Core/Drv_PIT/drv_pit.cpp:188:6:void DrvPIT::halt()	1
-../Core/Drv_PIT/drv_pit.cpp:201:6:void DrvPIT::resume()	1
-../Core/Drv_PIT/drv_pit.cpp:212:10:uint32_t DrvPIT::getCounter()	1
-../Core/Drv_PIT/drv_pit.cpp:222:6:void DrvPIT::configurePeripheral()	1

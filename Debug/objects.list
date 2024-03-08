@@ -1,4 +1,4 @@
-"./Core/Drv_PIT/drv_pit.o"
+"./Core/Bases/bases.o"
 "./Core/Src/app.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f0xx_hal_msp.o"

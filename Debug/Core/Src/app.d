@@ -30,7 +30,7 @@ Core/Src/app.o: ../Core/Src/app.cpp ../Core/Inc/app.hpp \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi_ex.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h \
- ../Core/Drv_PIT/drv_pit.hpp
+ ../Core/Src/../Bases/bases.cpp
 ../Core/Inc/app.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h:
@@ -64,4 +64,4 @@ Core/Src/app.o: ../Core/Src/app.cpp ../Core/Inc/app.hpp \
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi.h:
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_spi_ex.h:
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tsc.h:
-../Core/Drv_PIT/drv_pit.hpp:
+../Core/Src/../Bases/bases.cpp:
