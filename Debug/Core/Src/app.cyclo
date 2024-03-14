@@ -1,8 +1,7 @@
-../Core/Src/../Bases/bases.cpp:8:5:Base::Base()	1
-../Core/Src/../Bases/bases.cpp:10:10:void Base::start(uint32_t)	1
-../Core/Src/../Bases/bases.cpp:14:10:void Base::start()	1
-../Core/Src/../Bases/bases.cpp:18:10:bool Base::get() const	2
-../Core/Src/../Bases/bases.cpp:32:10:void Base::restart()	1
+../Core/Src/../Bases/bases.cpp:44:5:Base::Base()	1
+../Core/Src/../Bases/bases.cpp:46:10:void Base::start(uint32_t)	1
+../Core/Src/../Bases/bases.cpp:50:10:bool Base::get() const	2
+../Core/Src/../Bases/bases.cpp:64:10:void Base::restart()	1
 ../Core/Src/app.cpp:11:5:int main()	1
 ../Core/Src/app.cpp:22:6:void app_init()	1
 ../Core/Src/app.cpp:30:6:void app_loop()	5

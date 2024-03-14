@@ -19,24 +19,22 @@
  * @code
  * #include "bases.h"
  *
- * int main() {
- *     BaseTimer timer;
+ * int main()
+ * {
+ *     Base timer;
  *
  *     // Setting the interval to 1000 milliseconds (1 second)
  *     timer.start(1000);
  *
- *     // Starting the timer
- *     timer.start();
- *
  *     // Waiting until the interval is reached
- *     while (!timer.get()) {
- *         // Perform other tasks while waiting
+ *     if(timer.get())
+ *     {
+ *     	// The interval is reached, perform the desired action
+ *     	toogle.led();
+ *     	// Restart the timer for the next cycle
+ *     	timer.restart();
  *     }
  *
- *     // The interval is reached, perform the desired action
- *
- *     // Restart the timer for the next cycle
- *     timer.restart();
  *
  *     return 0;
  * }
@@ -56,10 +54,6 @@ public:
     	intervalMs_ = interval;
     }
 
-    void start() {
-        startTime_ = HAL_GetTick(); // Usando HAL_GetTick() para obter o tempo inicial
-    }
-
     bool get() const {
         auto currentTime = HAL_GetTick(); // Obter o tempo atual
 
@@ -75,7 +69,7 @@ public:
     }
 
     void restart() {
-        start();
+        startTime_ = HAL_GetTick(); // Usando HAL_GetTick() para obter o tempo inicial
     }
 
 private:

@@ -6,7 +6,7 @@
 Base BASE1;
 Base BASE2;
 Base BASE5;
-Base BASE10;
+Base BASE05;
 
 int main()
 {
@@ -24,7 +24,7 @@ void app_init()
 	  (void)BASE1.start(1000);
 	  (void)BASE2.start(2000);
 	  (void)BASE5.start(5000);
-	  (void)BASE10.start(10000);
+	  (void)BASE05.start(500);
 }
 
 void app_loop()
@@ -44,8 +44,8 @@ void app_loop()
 	  (void)BASE5.restart();
     }
 
-    if(BASE10.get()){
+    if(BASE05.get()){
 	  HAL_GPIO_TogglePin(LD6_GPIO_Port, LD6_Pin);
-	  (void)BASE10.restart();
+	  (void)BASE05.restart();
     }
 }
