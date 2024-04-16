@@ -46,11 +46,13 @@
 
 #include "stm32f0xx_hal.h"
 
+#define getTick() HAL_GetTick() // change include and this hal funtion to use this class on other micros.
+
 class Base {
 public:
     Base() : intervalMs_(0), elapsedTime_(0)
     {
-        startTime_ = HAL_GetTick(); // Using getTick() to get the initial time
+        startTime_ = getTick(); // Using getTick() to get the initial time
     }
     void start(uint32_t interval) {
         intervalMs_ = interval;
@@ -73,11 +75,6 @@ public:
     void restart() {
         startTime_ = getTick(); // Using getTick() to get the initial time
     }
-
-protected:
-    uint32_t getTick() const override {
-            return HAL_GetTick();
-        }
         
 private:
     uint32_t intervalMs_; // Interval in milliseconds
