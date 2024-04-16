@@ -1,9 +1,11 @@
-../Core/Src/../Bases/bases.cpp:44:5:Base::Base()	16	static
-../Core/Src/../Bases/bases.cpp:46:10:void Base::start(uint32_t)	16	static
-../Core/Src/../Bases/bases.cpp:50:10:bool Base::get() const	24	static
-../Core/Src/../Bases/bases.cpp:64:10:void Base::restart()	16	static
-../Core/Src/app.cpp:11:5:int main()	8	static
-../Core/Src/app.cpp:22:6:void app_init()	8	static
-../Core/Src/app.cpp:30:6:void app_loop()	8	static
-../Core/Src/app.cpp:51:1:void __static_initialization_and_destruction_0(int, int)	16	static
-../Core/Src/app.cpp:51:1:cpp)	8	static
+../Core/Src/../Bases/bases.cpp:51:5:Base::Base()	16	static
+../Core/Src/../Bases/bases.cpp:55:10:void Base::start(uint32_t)	16	static
+../Core/Src/../Bases/bases.cpp:59:10:bool Base::get() const	24	static
+../Core/Src/../Bases/bases.cpp:73:10:void Base::restart()	16	static
+../Core/Src/app.cpp:16:5:int main()	8	static
+../Core/Src/app.cpp:27:6:void app_init()	8	static
+../Core/Src/app.cpp:36:6:void adc_teste()	8	static
+../Core/Src/app.cpp:57:6:void bases_teste()	8	static
+../Core/Src/app.cpp:80:6:void app_loop()	8	static
+../Core/Src/app.cpp:83:1:void __static_initialization_and_destruction_0(int, int)	16	static
+../Core/Src/app.cpp:83:1:cpp)	8	static

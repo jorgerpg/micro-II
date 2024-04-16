@@ -48,8 +48,10 @@
 
 class Base {
 public:
-    Base() : intervalMs_(0), startTime_(0), elapsedTime_(0) {}
-
+    Base() : intervalMs_(0), elapsedTime_(0)
+    {
+        startTime_ = HAL_GetTick(); // Using getTick() to get the initial time
+    }
     void start(uint32_t interval) {
     	intervalMs_ = interval;
     }
