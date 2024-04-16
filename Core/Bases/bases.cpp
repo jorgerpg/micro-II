@@ -53,15 +53,15 @@ public:
         startTime_ = HAL_GetTick(); // Using getTick() to get the initial time
     }
     void start(uint32_t interval) {
-    	intervalMs_ = interval;
+        intervalMs_ = interval;
     }
 
     bool get() const {
-        auto currentTime = HAL_GetTick(); // Obter o tempo atual
+        auto currentTime = getTick(); // Get the current time
 
-        // Lidar com o estouro
+        // Handle overflow
         if (currentTime < startTime_) {
-            // Estouro ocorreu, ajustar a diferença
+            // Overflow occurred, adjust the difference
             elapsedTime_ = UINT32_MAX - startTime_ + currentTime;
         } else {
             elapsedTime_ = currentTime - startTime_;
@@ -71,13 +71,18 @@ public:
     }
 
     void restart() {
-        startTime_ = HAL_GetTick(); // Usando HAL_GetTick() para obter o tempo inicial
+        startTime_ = getTick(); // Using getTick() to get the initial time
     }
 
+protected:
+    uint32_t getTick() const override {
+            return HAL_GetTick();
+        }
+        
 private:
-    uint32_t intervalMs_; // Intervalo em milissegundos
-    uint32_t startTime_;   // Tempo de início do temporizador
-    mutable uint32_t elapsedTime_; // Tempo decorrido desde o início
+    uint32_t intervalMs_; // Interval in milliseconds
+    uint32_t startTime_;   // Timer start time
+    mutable uint32_t elapsedTime_; // Time elapsed since start
 };
 
 #endif // BASE_H
