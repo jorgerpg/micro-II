@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -85,8 +85,8 @@ all: main-build
 main-build: micro-II.elf secondary-outputs
 
 # Tool invocations
-micro-II.elf micro-II.map: $(OBJS) $(USER_OBJS) C:\Users\SENAI\STM32CubeIDE\workspace_1.14.1\micro-II\STM32F072RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "micro-II.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"C:\Users\SENAI\STM32CubeIDE\workspace_1.14.1\micro-II\STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="micro-II.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+micro-II.elf micro-II.map: $(OBJS) $(USER_OBJS) /home/jorge/Documentos/micro-II/STM32F072RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "micro-II.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"/home/jorge/Documentos/micro-II/STM32F072RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="micro-II.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
