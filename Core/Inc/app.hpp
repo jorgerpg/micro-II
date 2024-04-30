@@ -15,17 +15,21 @@
 enum MSTATES {
     INIT_STATE,
     CONFIG_STATE,
-    READ_STATE,
     CONVERT_STATE,
+    READ_STATE,
     DIGITAL_STATE
 };
 
 void initLEDS();
 void writeLED();
 void appInit();
-void adcConfig();
 void stateMachine();
 void appFunction(uint16_t value);
+
+void initADC();
+void configADC();
+void convertADC();
+uint16_t readADC();
 
 uint16_t adcValue;
 

@@ -31,27 +31,19 @@ void stateMachine()
             }
             case CONFIG_STATE:
             {
-                adcConfig(); // Configure ADC
+            	configADC(); // Configure ADC
+                STATE = CONVERT_STATE; // Move to CONVERT_STATE
+                break;
+            }
+            case  CONVERT_STATE:
+            {
+            	convertADC(); // start ADC conversion
                 STATE = READ_STATE; // Move to READ_STATE
                 break;
             }
             case READ_STATE:
             {
-                // Start ADC conversion
-                ADC1->CR |= ADC_CR_ADSTART;
-
-                STATE = CONVERT_STATE; // Move to CONVERT_STATE
-                break;
-            }
-            case CONVERT_STATE:
-            {
-                // Wait for conversion to complete
-                while (!(ADC1->ISR & ADC_ISR_EOC));
-
-                adcValue = ADC1->DR; // Read ADC value
-
-                // Clear end of conversion flag
-                ADC1->ISR &= ~ADC_ISR_EOC;
+            	adcValue = readADC(); // read ADC value
                 STATE = DIGITAL_STATE; // Move to DIGITAL_STATE
                 break;
             }
@@ -107,56 +99,11 @@ void writeLED(uint32_t pin, GPIO_PinState state)
  */
 void appInit()
 {
+    adcValue = 0; // Initialize ADC value
+
     // Initialize application-specific peripherals
     initLEDS();
-    adcValue = 0; // Initialize ADC value
-}
-
-/**
- * @brief Configure the ADC at the register level.
- */
-void adcConfig() {
-    // Enable the clock for GPIOA
-    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
-
-    // Configure PA1 as an analog input
-    // Set the MODER bits for PA1 to 11 (analog mode)
-    GPIOA->MODER |= (0x3 << (1 * 2));
-
-    // Disable pull-up and pull-down resistors for PA1
-    // Set the PUPDR bits for PA1 to 00 (no pull-up or pull-down)
-    GPIOA->PUPDR &= ~(0x3 << (1 * 2));
-
-    // Enable the clock for ADC
-    RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
-
-    // Configure ADC resolution and data alignment
-
-    // Clear the RES[1:0] bits in the ADC_CFGR1 register
-    ADC1->CFGR1 &= ~(0x3 << 3);
-
-    // Set the RES[1:0] bits to 00 (12-bit resolution)
-    ADC1->CFGR1 |= (0x0 << 3);
-
-    // Configure ADC channel sequence and sampling time
-    ADC1->CHSELR = ADC_CHSELR_CHSEL1; // Select channel 1 (pin A1)
-    ADC1->SMPR &= ~ADC_SMPR_SMP; // Clear sample time bits
-
-    // Set the SMP[2:0] bits to 111 for 239.5 ADC clock cycles sampling time
-    ADC1->SMPR |= (0x7);
-
-    // Calibrate the ADC
-    ADC1->CR &= ~ADC_CR_ADEN; // Ensure ADC is disabled
-    ADC1->CR |= ADC_CR_ADCAL; // Start calibration
-    while (ADC1->CR & ADC_CR_ADCAL); // Wait for calibration to complete
-
-    // Enable continuous conversion mode
-    ADC1->CFGR1 |= ADC_CFGR1_CONT; // Set the CONT bit to enable continuous conversion mode
-
-    // Enable the ADC
-    ADC1->CR |= ADC_CR_ADEN; // Enable the ADC
-    while (!(ADC1->ISR & ADC_ISR_ADRDY)); // Wait for ADC to be ready
-
+    initADC();
 }
 
 /**
@@ -180,4 +127,76 @@ void appFunction(uint16_t value)
 
     // Add a small delay for stability (you can adjust the delay as needed)
     HAL_Delay(100);
+}
+
+/**
+ * @brief  Function to initialize GPIOA and ADC1 clocks
+ */
+void initADC()
+{
+
+    // Enable the clock for GPIOA
+    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+
+    // Enable the clock for ADC
+    RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
+}
+
+/**
+ * @brief  Function to configure GPIOA and ADC1
+ */
+void configADC() {
+    // Configure PA1 as an analog input
+    GPIOA->MODER |= (0x3 << (1 * 2));
+
+    // Disable pull-up and pull-down resistors for PA1
+    GPIOA->PUPDR &= ~(0x3 << (1 * 2));
+
+    // Clear the RES[1:0] bits in the ADC_CFGR1 register
+    ADC1->CFGR1 &= ~(0x3 << 3);
+
+    // Set the RES[1:0] bits to 00 (12-bit resolution) max value is 4092
+    ADC1->CFGR1 |= (0x0 << 3);
+
+    // Configure ADC channel sequence and sampling time
+    ADC1->CHSELR = ADC_CHSELR_CHSEL1; // Select channel 1 (pin A1)
+    ADC1->SMPR &= ~ADC_SMPR_SMP; // Clear sample time bits
+    ADC1->SMPR |= (0x7); // Set the SMP[2:0] bits to 111 for 239.5 ADC clock cycles sampling time
+}
+
+/**
+ * @brief Function to start ADC conversion
+ */
+void convertADC()
+{
+    // Calibrate the ADC
+    ADC1->CR &= ~ADC_CR_ADEN; // Ensure ADC is disabled
+    ADC1->CR |= ADC_CR_ADCAL; // Start calibration
+    while (ADC1->CR & ADC_CR_ADCAL); // Wait for calibration to complete
+
+    // Enable continuous conversion mode
+    ADC1->CFGR1 |= ADC_CFGR1_CONT; // Set the CONT bit to enable continuous conversion mode
+
+    // Enable the ADC
+    ADC1->CR |= ADC_CR_ADEN; // Enable the ADC
+    while (!(ADC1->ISR & ADC_ISR_ADRDY)); // Wait for ADC to be ready
+
+    // Start ADC conversion
+    ADC1->CR |= ADC_CR_ADSTART;
+}
+
+/**
+* @brief Function to read ADC value
+*/
+uint16_t readADC()
+{
+    // Wait for conversion to complete
+    while (!(ADC1->ISR & ADC_ISR_EOC));
+
+    uint16_t adcValue = ADC1->DR; // Read ADC value
+
+    // Clear end of conversion flag
+    ADC1->ISR &= ~ADC_ISR_EOC;
+
+    return adcValue;
 }
