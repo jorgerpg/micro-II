@@ -1,13 +1,7 @@
-../Core/Src/../Bases/bases.cpp:53:5:Base::Base()	1
-../Core/Src/../Bases/bases.cpp:57:10:void Base::start(uint32_t)	1
-../Core/Src/../Bases/bases.cpp:61:10:bool Base::get() const	2
-../Core/Src/../Bases/bases.cpp:75:10:void Base::restart()	1
-../Core/Src/app.cpp:13:5:int main()	1
-../Core/Src/app.cpp:24:6:void app_init()	1
-../Core/Src/app.cpp:33:6:void ADC_Init()	3
-../Core/Src/app.cpp:77:10:uint16_t Read_ADC()	2
-../Core/Src/app.cpp:93:6:void adc_teste()	3
-../Core/Src/app.cpp:122:6:void bases_teste()	5
-../Core/Src/app.cpp:146:6:void app_loop()	1
-../Core/Src/app.cpp:148:1:void __static_initialization_and_destruction_0(int, int)	3
-../Core/Src/app.cpp:148:1:cpp)	1
+../Core/Src/app.cpp:11:5:int main()	1
+../Core/Src/app.cpp:19:6:void stateMachine()	7
+../Core/Src/app.cpp:73:6:void initLEDS()	1
+../Core/Src/app.cpp:96:6:void writeLED(uint32_t, GPIO_PinState)	2
+../Core/Src/app.cpp:108:6:void appInit()	1
+../Core/Src/app.cpp:118:6:void adcConfig()	3
+../Core/Src/app.cpp:166:6:void appFunction(uint16_t)	3
